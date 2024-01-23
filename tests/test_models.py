@@ -200,14 +200,22 @@ class TestProductModel(unittest.TestCase):
         for product in found:
             self.assertEqual(product.category, category)
 
-    def test_deserialize(self):
+    def test_deserialize_with_invalid_available(self):
         product = ProductFactory()
         data = {}
         data["name"] = product.name  
         data["description"] = product.description
         data["price"] = product.price
         data["available"] = 4
+        self.assertRaises(DataValidationError, product.deserialize, data = data )
 
+    def test_deserialize_with_invalid_type(self):
+        product = ProductFactory()
+        data = {}
+        data["XXXX"] = 444 # Invalid type  
+        data["description"] = product.description
+        data["price"] = "GGGG"
+        data["available"] = 4
         self.assertRaises(DataValidationError, product.deserialize, data = data )
 
 
