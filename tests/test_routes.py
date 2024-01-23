@@ -32,6 +32,7 @@ from service import app
 from service.common import status
 from service.models import db, init_db, Product
 from tests.factories import ProductFactory
+from urllib.parse import quote_plus
 
 # Disable all but critical errors during normal test run
 # uncomment for debugging failing tests
@@ -260,8 +261,7 @@ class TestProductRoutes(TestCase):
         self.assertEqual(len(data), found_count)
         # check the data just to be sure
         for product in data:
-            self.assertEqual(product["category"], category.name)            
-
+            self.assertEqual(product["category"], category.name)
 
     def test_query_by_availability(self):
         """It should Query Products by availability"""
@@ -278,5 +278,4 @@ class TestProductRoutes(TestCase):
         # check the data just to be sure
         for product in data:
             self.assertEqual(product["available"], True)
-
 
